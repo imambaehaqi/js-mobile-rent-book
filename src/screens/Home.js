@@ -7,8 +7,17 @@ import SearchBook from '../components/SearchBook'
 import CarouselBook from '../components/CarouselBook'
 import CardBook from '../components/CardBook'
 
+import {connect} from 'react-redux'
+
 class Home extends Component {
-       render() {
+    constructor(props) {
+        super(props)
+        this.state = {
+            SignUpForm: {}
+        }
+    }
+
+    render() {
         return (
             <View style={Styles.container2}>
                 <View style={{flexDirection:'row'}}>
@@ -24,12 +33,15 @@ class Home extends Component {
                     <View style={{paddingTop:60}}>
                         <Text style={Styles.textAuth2}>Popular Books</Text>
                     </View>
-                    <CardBook /> 
+                    <CardBook {...this.props} /> 
                     <Button onPress = {() => this.props.navigation.push('Detail')} title="Detail"/>  
                 </ScrollView>                
             </View>
         )
     }
 }
-
-export default Home
+    const MapStateToProps = state => {
+        return { user: state.user}
+    }
+    
+    export default connect (MapStateToProps) (Home)

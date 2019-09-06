@@ -1,41 +1,61 @@
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { createAppContainer } from 'react-navigation'
+
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createStackNavigator } from 'react-navigation-stack'
 
-import Home from './screens/Home'
-import Profile from './screens/Profile'
-import History from './screens/History'
+import SignInScreen from './screens/SignIn'
+import SignUpScreen from './screens/SignUp'
 
-const TabNavigator = createBottomTabNavigator(
+import HomeScreen from './screens/Home'
+import ProfileScreen from './screens/Profile'
+import HistoryScreen from './screens/History'
+import DetailScreen from './screens/Detail'
+
+const HomeMain = createStackNavigator(
   {
-    Home: Home,
-    History: History,
-    Profile: Profile
-  },
-  {
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state
-        let IconComponent = Ionicons
-        let iconName
-        if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-          // Sometimes we want to add badges to some icons.
-          // You can check the implementation below.
-          IconComponent = HomeIconWithBadge;
-        } else if (routeName === 'Settings') {
-          iconName = `ios-options`
-        }
-
-        // You can return any component that you like here!
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray'
-    },
+      Home: { screen: HomeScreen },
+      Detail: { screen: DetailScreen }
+  },{
+      headerMode: "none"
   }
-);
+)
 
-export default createAppContainer(TabNavigator)
+const HomeTabNavigation = createBottomTabNavigator(
+  {
+      Home: HomeMain,
+      History: HistoryScreen,
+      Profile: ProfileScreen
+  },{
+      navigationOptions: ({ navigation }) => ({
+          tabBarIcon: ({ tintColor }) => {
+              const { routeName } = navigation.state;
+              // let IconComponent = Ionicons;
+              let iconName = Ionicons
+              if (routeName === 'Home') {
+                  iconName = `home`
+              } else if (routeName === 'History') {
+                  iconName = `time`
+              } else if (routeName = 'Profile') {
+                  iconName = 'person'
+              }
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={25} color={tintColor} />
+          }
+      }),
+      tabBarOptions: {
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'gray',
+      }
+  }
+)
+
+const MainNavigate = createSwitchNavigator(
+  {
+      SignIn: { screen: SignInScreen },
+      SignUp: { screen: SignUpScreen },
+      TabScreen: { screen: HomeTabNavigation }
+  }
+)
+
+export default createAppContainer( MainNavigate )

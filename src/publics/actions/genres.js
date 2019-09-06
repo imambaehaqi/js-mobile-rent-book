@@ -3,7 +3,7 @@ import Axios from 'axios'
 export const getGenres = () => {
   return {
     type:'GET_GENRES',
-    payload: Axios.get(`http://localhost:1708/genres`,{
+    payload: Axios.get(`${URL}/genres`,{
         headers:{
           Authorization : window.localStorage.getItem("token")
         }
@@ -15,7 +15,7 @@ export const getGenres = () => {
 export const addGenre = (data) => {
   return {
     type:'ADD_GENRES',
-    payload: Axios.post(`http://localhost:1708/genres`, data, {
+    payload: Axios.post(`${URL}/genres`, data, {
         headers:{
           Authorization : window.localStorage.getItem("token")
         }
@@ -26,7 +26,7 @@ export const addGenre = (data) => {
 export const deleteGenre = (id) => {
   return {
     type:'DELETE_GENRES',
-    payload: Axios.delete(`http://localhost:1708/genres/${id}`,{
+    payload: Axios.delete(`${URL}/genres/${id}`,{
         headers:{
           Authorization : window.localStorage.getItem("token")
         }
@@ -37,7 +37,7 @@ export const deleteGenre = (id) => {
 export const editGenre = (id, data) => {
   return {
     type:'EDIT_GENRES',
-    payload: Axios.patch(`http://localhost:1708/genres/${id}`, data,{
+    payload: Axios.patch(`${URL}/genres/${id}`, data,{
         headers:{
           Authorization : window.localStorage.getItem("token")
         }

@@ -1,30 +1,17 @@
-import React from 'react'
-import { createAppContainer } from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack'
-
-import SignIn from './src/screens/SignIn'
-import SignUp from './src/screens/SignUp'
+import React, { Component } from 'react'
 import Main from './src/Main'
-import Detail from './src/screens/Detail'
+import store from './src/publics/store'
+import { Provider } from 'react-redux'
+import { Root } from 'native-base'
 
-const AppNavigator = createStackNavigator({
-  SignIn: {
-    screen: SignIn
-  },
-  Main: {
-    screen: Main
-  },
-  Detail: {
-    screen: Detail
-  },
-  SignUp: {
-    screen: SignUp
-  },
-},{
-    defaultNavigationOptions: {
-      header: null
-    }
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Root>
+          <Main />
+        </Root>
+      </Provider>
+    )
   }
-)
-
-export default createAppContainer(AppNavigator)
+}
